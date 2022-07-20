@@ -1,5 +1,6 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 public class PointScore : MonoBehaviour
 {
@@ -23,8 +24,12 @@ public class PointScore : MonoBehaviour
     }
     public void PointUp(int point)
     {
-        Debug.Log(point);
-        scoreValue += point;
+        if (!UserDataManager.Instance.isGuest)
+        {
+            scoreValue += point;
+            Debug.Log(scoreValue);
+            UserDataManager.Instance.GetComponent<PointHttp>().ReqPoint(point);
+        }
     }
 
     public void PointUp(string eventName, int point)
@@ -36,5 +41,13 @@ public class PointScore : MonoBehaviour
     public void PointDown(int point)
     {
         scoreValue -= point;
+        UserDataManager.Instance.GetComponent<PointHttp>().ReqPoint(-point);
+    }
+
+    public void PointDown(string eventName, int point)
+    {
+        Debug.Log(eventName + " : " + point);
+        scoreValue -= point;
     }
 }
+
