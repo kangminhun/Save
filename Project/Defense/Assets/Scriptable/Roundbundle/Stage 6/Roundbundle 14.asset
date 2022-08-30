@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56723fd9b3c68dd4ebfe7f5fbce45c0b, type: 3}
+  m_Name: Roundbundle 14
+  m_EditorClassIdentifier: 
+  rounds:
+  - enemy: {fileID: 11400000, guid: 6a85762f17458fe4a964c0249c81fe1c, type: 2}
+    count: 25
+    rate: 2
+  - enemy: {fileID: 11400000, guid: 2f1af51a1f9547c4abfa8399ea5d05a0, type: 2}
+    count: 10
+    rate: 2
+  count: 0
