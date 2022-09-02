@@ -19,20 +19,24 @@ public class SupportTower : MonoBehaviour
     public bool powerUp;
     public bool shieldUp;
     public bool healing;
+    public bool watch;
 
-    [Header("업그레드 정도")]
+    [Header("업그레이드 정도")]
     [Range(0,10)]
     public float shieldCount;
     public int upgradepuset;
     public int healingPower;
 
     private float contdown;
-    private Node node;
+    private GameObject[] targets;
     private void Update()
     {
-		UpdateTarget();
-	}
-    public void UpdateTarget()
+        if (!watch)
+            UpdateTarget_Turret();
+        else
+            UpdateTarget_Enemy();
+    }
+    public void UpdateTarget_Turret()
 	{
         myList = gameManager.turretList;
         turrets = new GameObject[myList.Count];
@@ -49,7 +53,6 @@ public class SupportTower : MonoBehaviour
                 float distanceToTurret = Vector3.Distance(transform.position, turrets[j].transform.position);
                 if (distanceToTurret <= range)
                 {
-                    //myList.Add(turrets[j]);
                     target = turrets[j];
                     targetTurret = target.GetComponent<Turret>();
                     targetHp = target.GetComponent<TurretHp>();
@@ -69,6 +72,33 @@ public class SupportTower : MonoBehaviour
                         {
                             Healer(healingPower);
                         }
+                    }
+                }
+            }
+        }
+    }
+    void UpdateTarget_Enemy()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        targets = enemies;
+        Color targetColor;
+        if (enemies != null )
+        {
+            for (int i = 0; i < enemies.Length; i++)
+            {
+                if (enemies[i].GetComponentInChildren<Renderer>().material.color.a != 1)
+                {
+                    float distanceToEnemy = Vector3.Distance(transform.position, enemies[i].transform.position);
+                    if (distanceToEnemy <= range)
+                    {
+                        target = enemies[i];
+                        targetColor = target.GetComponentInChildren<Renderer>().material.color;
+                        targetColor.a = 0.95f;
+                        target.GetComponentInChildren<Renderer>().material.color = targetColor;
+                    }
+                    else
+                    {
+                        enemies[i].GetComponentInChildren<Renderer>().material.color = enemies[i].GetComponentInChildren<Enemy>().startColor;
                     }
                 }
             }
@@ -97,7 +127,7 @@ public class SupportTower : MonoBehaviour
         {
             if (contdown <= 0)
             {
-                if(targetHp.hp+heal<=100)
+                if(targetHp.hp+heal<100)
                 {
                     targetHp.hp += heal;
                     targetTurret.UpColor(Color.green);
@@ -114,24 +144,35 @@ public class SupportTower : MonoBehaviour
     }
     public void SupportingEnd()
     {
-        for (int i = 0; i < turrets.Length; i++)
+        if (!watch)
         {
-            if (turrets[i] != null)
+            for (int i = 0; i < turrets.Length; i++)
             {
-                float distanceToTurret = Vector3.Distance(transform.position, turrets[i].transform.position);
-                if (distanceToTurret <= range)
+                if (turrets[i] != null)
                 {
-                    target = turrets[i];
-                    targetTurret = target.GetComponent<Turret>();
-                    targetHp = target.GetComponent<TurretHp>();
-                    if (targetTurret != null)
+                    float distanceToTurret = Vector3.Distance(transform.position, turrets[i].transform.position);
+                    if (distanceToTurret <= range)
                     {
-                        PowerOrigin();
-                        targetTurret.OriginColor();
+                        target = turrets[i];
+                        targetTurret = target.GetComponent<Turret>();
+                        targetHp = target.GetComponent<TurretHp>();
+                        if (targetTurret != null)
+                        {
+                            PowerOrigin();
+                            targetTurret.OriginColor();
+                        }
                     }
                 }
             }
         }
+        else
+        {
+            for (int i = 0; i < targets.Length; i++)
+            {
+                targets[i].GetComponentInChildren<Renderer>().material.color = targets[i].GetComponentInChildren<Enemy>().startColor;
+            }
+        }
+
     }
     public void PowerOrigin()
     {

@@ -59,7 +59,6 @@ public class Bullet : MonoBehaviour {
 		else if (slowRadius > 0f)
 		{
 			Slowing();
-			Debug.Log($"{slowRadius}");
 		}
 		else
 		{
@@ -73,8 +72,7 @@ public class Bullet : MonoBehaviour {
 		Collider[] colliders = Physics.OverlapSphere(transform.position, slowRadius);
 		foreach (Collider collider in colliders)
 		{
-			Debug.Log(collider);
-			if (collider.tag == "Enemy")
+			if (collider.tag == "EnemyBody")
 			{
 				Slow(collider.transform.parent);
 				Damage(collider.transform.parent);
@@ -86,7 +84,7 @@ public class Bullet : MonoBehaviour {
 		Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
 		foreach (Collider collider in colliders)
 		{
-			if (collider.tag == "Enemy")
+			if (collider.tag == "EnemyBody")
 			{
 				Damage(collider.transform.parent);
 			}

@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scriptable: {fileID: 11400000, guid: 1166936e7358d274397d5a0c97609ac4, type: 2}
+  boss: 1
   speed: 10
   slowing: 0
   health: 0
@@ -54,6 +55,7 @@ MonoBehaviour:
   worth: 140
   deathEffect: {fileID: 1000010680075956, guid: cbb84b288011e3547a4eabef8f4280f8, type: 3}
   healthBar: {fileID: 6302328964703478897}
+  startColor: {r: 0, g: 0, b: 0, a: 0}
   attackMode: 1
   damege: 100
 --- !u!114 &5962034516728984574
@@ -336,7 +338,7 @@ GameObject:
   - component: {fileID: 6260949794347564923}
   m_Layer: 0
   m_Name: Body
-  m_TagString: Enemy
+  m_TagString: EnemyBody
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

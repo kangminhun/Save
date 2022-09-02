@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 7777579943939038048}
   - component: {fileID: 5502075480618113516}
   - component: {fileID: 200261869242698104}
-  - component: {fileID: -1379410365057453022}
   - component: {fileID: -8956079184813482226}
   m_Layer: 0
   m_Name: HealerTower 4
@@ -121,19 +120,6 @@ MonoBehaviour:
   shieldCount: 0
   upgradepuset: 0
   healingPower: 20
---- !u!114 &-1379410365057453022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8570264510749495471}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65b2099a78657774088deb31f2c7b70f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  upgradeCost: 1000
 --- !u!114 &-8956079184813482226
 MonoBehaviour:
   m_ObjectHideFlags: 0

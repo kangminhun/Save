@@ -456,7 +456,6 @@ GameObject:
   - component: {fileID: 1877023267192910833}
   - component: {fileID: 3259880673883085848}
   - component: {fileID: -4712239173647006022}
-  - component: {fileID: 4275044014567411326}
   - component: {fileID: -303066396191190898}
   m_Layer: 0
   m_Name: TestTurretUp 1
@@ -511,6 +510,7 @@ MonoBehaviour:
   startDamege: 1200
   startDamageOverTime: 30
   Head: {fileID: 1877023266777611655}
+  startColor: []
 --- !u!120 &-4712239173647006022
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -609,19 +609,6 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!114 &4275044014567411326
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1877023267192910832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65b2099a78657774088deb31f2c7b70f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  upgradeCost: 0
 --- !u!114 &-303066396191190898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -637,4 +624,5 @@ MonoBehaviour:
   hpcanvas: {fileID: 2991569070614110418, guid: cf2e4ad19fb474349bfcadea8b82b21f, type: 3}
   hpBar: {fileID: 0}
   shield: 0
+  startShield: 0
   hp: 100

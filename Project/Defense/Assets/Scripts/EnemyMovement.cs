@@ -98,17 +98,18 @@ public class EnemyMovement : MonoBehaviour {
     {
 		float shortestDistance = Mathf.Infinity;
 		Node nearestNode = null;
-		foreach (GameObject turret in targetTurret)
+		foreach (GameObject turrets in targetTurret)
 		{
-			float distanceToTurret = Vector3.Distance(transform.position, turret.transform.position);
+			float distanceToTurret = Vector3.Distance(transform.position, turrets.transform.position);
 			if (distanceToTurret < shortestDistance)
 			{
 				shortestDistance = distanceToTurret;
-				nearestNode = turret.GetComponent<Node>();
+				nearestNode = turrets.GetComponent<Node>();
 			}
 		}
-		if (nearestNode != null && shortestDistance <= 15f&& nearestNode.turret!=null)
+		if (nearestNode != null && nearestNode.turret!=null)
         {
+			//&& shortestDistance <= 15f
 			targetNode = nearestNode;
 			attack = true;
 		}
@@ -141,7 +142,14 @@ public class EnemyMovement : MonoBehaviour {
 	//Á×Áö¾Ê°í µµÂøÇßÀ»½Ã
 	void EndPath()
 	{
-		PlayerStats.Lives--;
+		if (!enemy.boss)
+		{
+			PlayerStats.Lives--;
+		}
+		else
+        {
+			PlayerStats.Lives-=10;
+		}
 		WaveSpawner.killCount++;
 		Destroy(gameObject);
 	}

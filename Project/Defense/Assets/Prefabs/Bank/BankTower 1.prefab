@@ -4875,7 +4875,6 @@ GameObject:
   - component: {fileID: 3773566939148013945}
   - component: {fileID: 5357214787490202795}
   - component: {fileID: 3707728539937672061}
-  - component: {fileID: 2334185639923651654}
   - component: {fileID: 7207719497840386914}
   m_Layer: 0
   m_Name: BankTower 1
@@ -4977,19 +4976,6 @@ MonoBehaviour:
   interest: 100
   interestTime: 15
   effect: {fileID: 6530111847584726554}
---- !u!114 &2334185639923651654
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4643400712054823386}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65b2099a78657774088deb31f2c7b70f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  upgradeCost: 0
 --- !u!114 &7207719497840386914
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5005,6 +4991,7 @@ MonoBehaviour:
   hpcanvas: {fileID: 2991569070614110418, guid: cf2e4ad19fb474349bfcadea8b82b21f, type: 3}
   hpBar: {fileID: 0}
   shield: 0
+  startShield: 0
   hp: 100
 --- !u!1 &7958662966614738403
 GameObject:

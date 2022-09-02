@@ -11,6 +11,7 @@ public class Shop : MonoBehaviour {
 	public TurretBlueprint powerUpTower;
 	public TurretBlueprint healerTower;
 	public TurretBlueprint shielderTower;
+	public TurretBlueprint watchTower;
 
 	BuildManager buildManager;
 
@@ -59,5 +60,9 @@ public class Shop : MonoBehaviour {
 	public void SeletShielderTower()
 	{
 		buildManager.SelectTurretToBuild(shielderTower);
+	}
+	public void SeletWatchTower()
+    {
+		buildManager.SelectTurretToBuild(watchTower);
 	}
 }

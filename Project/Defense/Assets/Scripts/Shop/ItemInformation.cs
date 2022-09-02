@@ -24,10 +24,10 @@ public class ItemInformation : MonoBehaviour
     }
     public void Buy()
     {
-        if (shopPoint.point - itemPrice > 0)
+        if (shopPoint.point - itemPrice >= 0)
         {
             int point = shopPoint.point - itemPrice;
-            shopPoint.point -= point;
+            shopPoint.point = point;
             PlayerPrefs.SetInt("PlayerPoint", shopPoint.point);
             Dontdestory.instance.inventory.AddItem(item);
             Debug.Log("구매완료");

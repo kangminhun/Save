@@ -5,7 +5,7 @@ using System.Collections;
 public class Enemy : MonoBehaviour {
 
 	public EnemyScriptable scriptable;
-
+	public bool boss = false;
 	[HideInInspector]
 	public float speed;
 	[HideInInspector]
@@ -23,7 +23,8 @@ public class Enemy : MonoBehaviour {
 	public Image healthBar;
 
 	private bool isDead = false;
-	private Color startColor;
+	[HideInInspector]
+	public Color startColor;
 	private float slow;
 
 	public bool attackMode;

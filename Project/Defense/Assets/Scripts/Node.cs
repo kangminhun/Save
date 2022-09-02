@@ -74,7 +74,6 @@ public class Node : MonoBehaviour
 			GameObject effect = (GameObject)Instantiate(buildManager.buildEffect, GetBuildPosition(), Quaternion.identity);
 			Destroy(effect, 5f);
 
-			Debug.Log("Turret build!");
 			upgradeCost = turretBlueprint.upgradeCost;
 			gameManager.turretList.Add(turret);
 			support = turret.GetComponent<SupportTower>();
@@ -92,7 +91,7 @@ public class Node : MonoBehaviour
 
 	public void UpgradeTurret()
 	{
-		if (PlayerStats.Money < turretBlueprint.upgradeCost)
+		if (PlayerStats.Money < upgradeCost)
 		{
 			Debug.Log("Not enough money to upgrade that!");
 			return;
@@ -221,6 +220,11 @@ public class Node : MonoBehaviour
 			BuildManager.instance.DeselectNode();
 			gameManager.turretList.Remove(turret);
 			Destroy(turret);
+			turretBlueprint = null;
+			if (upgraded != isUpgraded.up1)
+			{
+				upgraded = isUpgraded.up1;
+			}
 		}
 	}
 }

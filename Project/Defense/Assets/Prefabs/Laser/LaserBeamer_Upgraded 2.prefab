@@ -4947,7 +4947,6 @@ GameObject:
   - component: {fileID: 4000012371708462}
   - component: {fileID: 114000013491523152}
   - component: {fileID: 120000012026282110}
-  - component: {fileID: -7071364696944767812}
   - component: {fileID: 2576595485687780649}
   m_Layer: 0
   m_Name: LaserBeamer_Upgraded 2
@@ -5003,6 +5002,7 @@ MonoBehaviour:
   startDamege: 0
   startDamageOverTime: 400
   Head: {fileID: 4000012789921548}
+  startColor: []
 --- !u!120 &120000012026282110
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -5110,19 +5110,6 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!114 &-7071364696944767812
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000013152263656}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65b2099a78657774088deb31f2c7b70f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  upgradeCost: 0
 --- !u!114 &2576595485687780649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5138,6 +5125,7 @@ MonoBehaviour:
   hpcanvas: {fileID: 2991569070614110418, guid: cf2e4ad19fb474349bfcadea8b82b21f, type: 3}
   hpBar: {fileID: 0}
   shield: 0
+  startShield: 0
   hp: 100
 --- !u!1 &1000013637573146
 GameObject:

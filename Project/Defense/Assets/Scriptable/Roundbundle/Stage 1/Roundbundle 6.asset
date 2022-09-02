@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Roundbundle 6
   m_EditorClassIdentifier: 
   rounds:
-  - enemy: {fileID: 11400000, guid: 6a85762f17458fe4a964c0249c81fe1c, type: 2}
-    count: 10
+  - enemy: {fileID: 11400000, guid: 1166936e7358d274397d5a0c97609ac4, type: 2}
+    count: 1
     rate: 2
-  - enemy: {fileID: 11400000, guid: 3ba0a6fdec1883d4f9f6f91b98f750ff, type: 2}
-    count: 6
+  - enemy: {fileID: 11400000, guid: fcdae0f1e20235c44b069101af812703, type: 2}
+    count: 10
     rate: 2
   count: 0

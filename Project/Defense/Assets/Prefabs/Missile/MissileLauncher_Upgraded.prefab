@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4000012696915146}
   - component: {fileID: 114000013549965756}
-  - component: {fileID: 3414471953233847390}
   - component: {fileID: 1521883726960783792}
   m_Layer: 0
   m_Name: MissileLauncher_Upgraded
@@ -65,19 +64,7 @@ MonoBehaviour:
   startDamege: 200
   startDamageOverTime: 30
   Head: {fileID: 4000013895862244}
---- !u!114 &3414471953233847390
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000010346017410}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65b2099a78657774088deb31f2c7b70f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  upgradeCost: 0
+  startColor: []
 --- !u!114 &1521883726960783792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93,6 +80,7 @@ MonoBehaviour:
   hpcanvas: {fileID: 2991569070614110418, guid: cf2e4ad19fb474349bfcadea8b82b21f, type: 3}
   hpBar: {fileID: 0}
   shield: 0
+  startShield: 0
   hp: 100
 --- !u!1 &1000012616440628
 GameObject:

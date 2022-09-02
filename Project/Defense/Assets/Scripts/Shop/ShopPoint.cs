@@ -9,6 +9,8 @@ public class ShopPoint : MonoBehaviour
     private SceneFader sceneFader;
     [HideInInspector]
     public int point;
+    [SerializeField]
+    private GameObject advertisementCanvas;
     void Start()
     {
         point = PlayerPrefs.GetInt("PlayerPoint");
@@ -27,5 +29,9 @@ public class ShopPoint : MonoBehaviour
     public void Back()
     {
         sceneFader.FadeTo("MainMenu");
+    }
+    public void OnAdvertisement()
+    {
+        advertisementCanvas.SetActive(true);
     }
 }

@@ -33,32 +33,11 @@ public class GameInventory : MonoBehaviour
             slots[i].item = null;
         }
     }
-    //public void AddItem(Item _item)
-    //{
-    //    if (items.Count < slots.Length)
-    //    {
-    //        items.Add(_item);
-    //        FreshSlot();
-    //    }
-    //    else
-    //        print("슬롯이 가득 차 있습니다.");
-    //}
-    //public void RemoveItem(Item _item)
-    //{
-    //    if (items.Count > 0)
-    //    {
-    //        items.Remove(_item);
-    //        FreshSlot();
-    //    }
-    //    else
-    //        print("사용할 아이템이 없습니다..");
-    //}
     public void SkillCooldown(Slot slot)
     {
         slot.skillOn = true;
         slot.cooldownImg.gameObject.SetActive(true);
         slot.cooldownImg.fillAmount = 1;
-        Debug.Log(slot.skillOn);
     }
     public void Click(int num)
     {

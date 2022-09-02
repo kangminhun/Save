@@ -70,11 +70,14 @@ public class Turret : MonoBehaviour {
 		GameObject nearestEnemy = null;
 		foreach (GameObject enemy in enemies)
 		{
-			float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
-			if (distanceToEnemy < shortestDistance)
-			{
-				shortestDistance = distanceToEnemy;
-				nearestEnemy = enemy;
+			if(enemy.GetComponentInChildren<Renderer>().material.color.a>=0.9)
+            {
+				float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+				if (distanceToEnemy < shortestDistance)
+				{
+					shortestDistance = distanceToEnemy;
+					nearestEnemy = enemy;
+				}
 			}
 		}
 
@@ -172,6 +175,10 @@ public class Turret : MonoBehaviour {
 
 		impactEffect.transform.rotation = Quaternion.LookRotation(dir);
 	}
+	void WatchTower()
+    {
+
+    }
 	void Shoot ()
 	{
 		GameObject bulletGO = (GameObject)Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
