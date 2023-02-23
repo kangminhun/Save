@@ -1,0 +1,127 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class CenterZoom : MonoBehaviour
+{
+    public float maxScale = 1.5f;
+    public float minScale = 1.0f;
+    public float maxAlpha = 1.0f;
+    public float minAlpha = 0.5f;
+
+    private ScrollRect scrollRect;
+    private RectTransform viewportTransform;
+
+    private void Start()
+    {
+        scrollRect = GetComponent<ScrollRect>();
+        viewportTransform = scrollRect.viewport;
+        StartSetting();
+        scrollRect.onValueChanged.AddListener(OnScrollChanged);
+    }
+   //스크롤 할 때 마다 호출되는 
+    private void OnScrollChanged(Vector2 value)
+    {
+        float minDist = float.MaxValue;
+        Transform closestChild = null;
+
+        // Find the child closest to the center of the viewport
+        for (int i = 0; i < scrollRect.content.childCount; i++)
+        {
+            Transform child = scrollRect.content.GetChild(i);
+            float dist = Mathf.Abs(child.position.x - (viewportTransform.position.x + 10));
+
+            if (dist < minDist)
+            {
+                minDist = dist;
+                closestChild = child;
+            }
+        }
+
+        // Set the scale and alpha of each child based on the closest child
+        for (int i = 0; i < scrollRect.content.childCount; i++)
+        {
+            Transform child = scrollRect.content.GetChild(i);
+            float dist = Mathf.Abs(child.position.x - (closestChild.position.x));
+
+            float scale = Mathf.Lerp(maxScale, minScale, dist / viewportTransform.rect.width * 50f);
+            float alpha = Mathf.Lerp(maxAlpha, minAlpha, dist / viewportTransform.rect.width * 50f);
+
+            child.localScale = new Vector3(scale, scale, 1f);
+            Color newColor;
+            newColor = child.GetComponent<Image>().color;
+            newColor.a = alpha;
+            if (alpha >= 1.1f)
+            {
+                child.transform.SetAsLastSibling();
+                newColor = Color.white;
+            }
+            else
+            {
+                newColor = Color.gray;
+            }
+            for (int j = 0; j < child.childCount; j++)
+            {
+                child.GetComponent<Image>().color = newColor;
+                child.GetChild(j).GetComponent<Image>().color = newColor;
+            }
+            if (child.GetChild(2).transform.childCount != 0)
+            {
+                child.GetChild(2).transform.GetChild(0).GetComponent<Image>().color = newColor;
+            }
+        }
+    }
+    // 위 코드랑 같지만 위는 스크롤에 시작해야 호출되서 부자연스러움 ->시작부터 한번 호출해서 
+    public void StartSetting()
+    {
+        float minDist = float.MaxValue;
+        Transform closestChild = null;
+
+        // Find the child closest to the center of the viewport
+        for (int i = 0; i < scrollRect.content.childCount; i++)
+        {
+            Transform child = scrollRect.content.GetChild(i);
+            float dist = Mathf.Abs(child.position.x - (viewportTransform.position.x + 10));
+
+            if (dist < minDist)
+            {
+                minDist = dist;
+                closestChild = child;
+            }
+        }
+
+        // Set the scale and alpha of each child based on the closest child
+        for (int i = 0; i < scrollRect.content.childCount; i++)
+        {
+            Transform child = scrollRect.content.GetChild(i);
+            float dist = Mathf.Abs(child.position.x - (closestChild.position.x));
+
+            float scale = Mathf.Lerp(maxScale, minScale, dist / viewportTransform.rect.width * 50f);
+            float alpha = Mathf.Lerp(maxAlpha, minAlpha, dist / viewportTransform.rect.width * 50f);
+
+            child.localScale = new Vector3(scale, scale, 1f);
+            Color newColor;
+            newColor = child.GetComponent<Image>().color;
+            newColor.a = alpha;
+            if (alpha >= 1.1f)
+            {
+                child.transform.SetAsLastSibling();
+                newColor = Color.white;
+            }
+            else
+            {
+                newColor = Color.gray;
+            }
+            for (int j = 0; j < child.childCount; j++)
+            {
+                child.GetComponent<Image>().color = newColor;
+                child.GetChild(j).GetComponent<Image>().color = newColor;
+            }
+            if (child.GetChild(2).transform.childCount != 0)
+            {
+                child.GetChild(2).transform.GetChild(0).GetComponent<Image>().color = newColor;
+            }
+        }
+    }
+}
