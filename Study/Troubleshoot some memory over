@@ -1,0 +1,436 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.Video;
+using UnityEngine.UI;
+
+public class Science2 : MonoBehaviour
+{
+    public GameObject subtitleImage;
+    public VideoPlayer player;
+
+    public VideoClip[] mainClips;
+
+    public AudioSource audioplayer;
+    public AudioClip[] audioClips;
+
+    public GameObject interactionUi;
+    public GameObject secretButton;
+
+    //개구리 이미지
+    public GameObject[] f_btns;
+    public Sprite[] f_startImgs;
+    public VideoClip[] f_serveClips;
+    public VideoPlayer f_serveplayer;
+    public GameObject f_serveImg;
+    public Sprite f_serveimg;
+    public Texture f_texture;
+
+
+    //두꺼비 이미지
+    public GameObject[] t_btns;
+    public Sprite[] t_startImgs;
+    public VideoClip[] t_serveClips;
+    public VideoPlayer t_serveplayer;
+    public GameObject t_serveImg;
+    public Sprite t_serveimg;
+    public Texture t_texture;
+
+    public bool touching = false;
+
+    private int touchcount = 0;
+    public Gamemanager manager;
+    float percent = 0;
+    public void OnEnable()
+    {
+        StartCoroutine(Starting());
+    }
+    public IEnumerator Starting()
+    {
+        player.clip = mainClips[0];
+        player.Play();
+        yield return new WaitForSeconds(.5f);
+        for (int i = 0; i < f_btns.Length; i++)
+        {
+            f_btns[i].transform.GetChild(0).GetComponent<Image>().sprite = f_startImgs[i];
+            t_btns[i].transform.GetChild(0).GetComponent<Image>().sprite = t_startImgs[i];
+        }
+        yield return new WaitForSeconds(.5f);
+
+        f_serveplayer.gameObject.GetComponent<RawImage>().texture = f_serveimg.texture;
+        t_serveplayer.gameObject.GetComponent<RawImage>().texture = t_serveimg.texture;
+
+        secretButton.GetComponent<Button>().onClick.AddListener(() => WaitGrowth());
+        StartCoroutine(VideoPause());
+        player.loopPointReached += Touch;
+    }
+    public void Update()
+    {
+        if(player.clip == mainClips[0])
+        {
+            percent = (float)player.frame / player.frameCount;
+        }
+    }
+    IEnumerator VideoPause()
+    {
+        while (percent < .5f)
+        {
+            yield return null;
+        }
+        player.Pause();
+        secretButton.SetActive(true);
+        while (percent < .545f)
+        {
+            yield return null;
+        }
+        player.Pause();
+        secretButton.SetActive(true);
+        while (percent < .59f)
+        {
+            yield return null;
+        }
+        player.Pause();
+        secretButton.SetActive(true);
+        while (percent < .635f)
+        {
+            yield return null;
+        }
+        player.Pause();
+        secretButton.SetActive(true);
+    }
+    public void Touch(VideoPlayer vp)
+    {
+        StartCoroutine(WaitTouch());
+    }
+    public IEnumerator FlogGrowth()
+    {
+        player.Stop();
+        secretButton.SetActive(true);
+        while (touching)
+        {
+            yield return null;
+        }
+        player.Play();
+        secretButton.SetActive(false);
+    }
+    public void WaitGrowth()
+    {
+        secretButton.SetActive(false);
+        player.Play();
+    }
+    public IEnumerator WaitTouch()
+    {
+        touching = true;
+        player.loopPointReached -= Touch;
+        while (touching)
+        {
+            interactionUi.SetActive(true);
+            if (touchcount >= 5)
+            {
+                touching = false;
+                for (int i = 0; i < f_btns.Length; i++)
+                {
+                    f_btns[i].GetComponent<Button>().enabled = true;
+                    t_btns[i].GetComponent<Button>().enabled = true;
+                }
+            }
+            yield return null;
+        }
+        yield return new WaitForSeconds(2f);
+        player.clip = mainClips[1];
+        player.Play();
+        yield return new WaitForSeconds(.5f);
+        interactionUi.SetActive(false);
+        while (player.isPlaying)
+        {
+            yield return null;
+        }
+        if (player.clip == mainClips[mainClips.Length-1])
+        {
+            manager.ComeBackList();
+        }
+    }
+    public void Click(string str)
+    {
+        Animator f_animator = new Animator();
+        Animator t_animator = new Animator();
+        Animator f_serve = new Animator();
+        Animator t_serve = new Animator();
+        switch (str)
+        {
+            case "skin":
+                f_serveplayer.gameObject.SetActive(true);
+                t_serveplayer.gameObject.SetActive(true);
+                f_serveImg.SetActive(false);
+                t_serveImg.SetActive(false);
+
+                f_serveplayer.gameObject.GetComponent<RawImage>().texture = f_serveimg.texture;
+                t_serveplayer.gameObject.GetComponent<RawImage>().texture = t_serveimg.texture;
+
+                f_animator = f_btns[0].GetComponent<Animator>();
+                t_animator = t_btns[0].GetComponent<Animator>();
+                StartCoroutine(Delay(f_animator, t_animator, str, false));
+                StartCoroutine(ServeVideoPlay(0, t_animator, 0, 1, str));
+
+                f_btns[0].GetComponent<Button>().enabled = false;
+                t_btns[0].GetComponent<Button>().enabled = false;
+                break;
+            case "movement":
+                f_serveplayer.gameObject.SetActive(false);
+                t_serveplayer.gameObject.SetActive(false);
+                f_serveImg.SetActive(true);
+                t_serveImg.SetActive(true);
+
+                f_animator = f_btns[1].GetComponent<Animator>();
+                t_animator = t_btns[1].GetComponent<Animator>();
+                StartCoroutine(Delay(f_animator, t_animator, str, 2, 3, 4, 5));
+                f_serve = f_serveImg.GetComponent<Animator>();
+                t_serve = t_serveImg.GetComponent<Animator>();
+
+                StartCoroutine(Delay(f_serve, t_serve, str, true));
+
+                f_btns[1].GetComponent<Button>().enabled = false;
+                t_btns[1].GetComponent<Button>().enabled = false;
+                break;
+            case "color":
+                f_serveplayer.gameObject.SetActive(true);
+                t_serveplayer.gameObject.SetActive(true);
+                f_serveImg.SetActive(false);
+                t_serveImg.SetActive(false);
+
+                f_serveplayer.gameObject.GetComponent<RawImage>().texture = f_serveimg.texture;
+                t_serveplayer.gameObject.GetComponent<RawImage>().texture = t_serveimg.texture;
+
+                f_animator = f_btns[2].GetComponent<Animator>();
+                t_animator = t_btns[2].GetComponent<Animator>();
+                StartCoroutine(Delay(f_animator, t_animator, str, false));
+                StartCoroutine(ServeVideoPlay(1, t_animator, 6, 7, str));
+
+                f_btns[2].GetComponent<Button>().enabled = false;
+                t_btns[2].GetComponent<Button>().enabled = false;
+                break;
+            case "nose":
+                f_serveplayer.gameObject.SetActive(false);
+                t_serveplayer.gameObject.SetActive(false);
+                f_serveImg.SetActive(true);
+                t_serveImg.SetActive(true);
+
+                f_animator = f_btns[3].GetComponent<Animator>();
+                t_animator = t_btns[3].GetComponent<Animator>();
+                StartCoroutine(Delay(f_animator, t_animator, str, 8, 9));
+                f_serve = f_serveImg.GetComponent<Animator>();
+                t_serve = t_serveImg.GetComponent<Animator>();
+                StartCoroutine(Delay(f_serve, t_serve, str, true));
+
+                f_btns[3].GetComponent<Button>().enabled = false;
+                t_btns[3].GetComponent<Button>().enabled = false;
+                break;
+            case "house":
+                f_serveplayer.gameObject.SetActive(true);
+                t_serveplayer.gameObject.SetActive(true);
+                f_serveImg.SetActive(false);
+                t_serveImg.SetActive(false);
+
+                f_serveplayer.gameObject.GetComponent<RawImage>().texture = f_serveimg.texture;
+                t_serveplayer.gameObject.GetComponent<RawImage>().texture = t_serveimg.texture;
+
+                f_animator = f_btns[4].GetComponent<Animator>();
+                t_animator = t_btns[4].GetComponent<Animator>();
+                StartCoroutine(Delay(f_animator, t_animator, str, false));
+                StartCoroutine(ServeVideoPlay(2, t_animator, 10, 11, str));
+
+                f_btns[4].GetComponent<Button>().enabled = false;
+                t_btns[4].GetComponent<Button>().enabled = false;
+                break;
+        }
+    }
+    IEnumerator ServeVideoPlay(int data, Animator animator, int audioNumber_1, int audioNumber_2, string str)
+    {
+        AnimatorStateInfo animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        while (animatorStateInfo.normalizedTime < 1.0f)
+        {
+            animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(.5f);
+        f_serveplayer.clip = f_serveClips[data];
+        f_serveplayer.Play();
+
+        audioplayer.clip = audioClips[audioNumber_1];
+        audioplayer.Play();
+
+        subtitleImage.SetActive(true);
+        subtitleImage.GetComponent<Animator>().SetTrigger("f_" + str);
+
+        yield return new WaitForSeconds(.2f);
+
+        f_serveplayer.gameObject.GetComponent<RawImage>().texture = f_texture;
+        yield return new WaitForSeconds((float)f_serveplayer.clip.length);
+
+        while (audioplayer.isPlaying)
+        {
+            yield return null;
+        }
+        yield return new WaitForSeconds(.5f); //재생중인 오디오가 있으면 대기
+
+        t_serveplayer.clip = t_serveClips[data];
+        t_serveplayer.Play();
+
+        audioplayer.clip = audioClips[audioNumber_2];
+        audioplayer.Play();
+
+        subtitleImage.GetComponent<Animator>().SetTrigger("t_" + str);
+
+        yield return new WaitForSeconds(.2f);
+
+        t_serveplayer.gameObject.GetComponent<RawImage>().texture = t_texture;
+        yield return new WaitForSeconds((float)t_serveplayer.clip.length);
+        touchcount++;
+        while (audioplayer.isPlaying)
+        {
+            yield return null;
+        }
+        yield return new WaitForSeconds(.5f); //재생중인 오디오가 있으면 대기
+        subtitleImage.SetActive(false);
+    }
+    IEnumerator Delay(Animator a1, Animator a2, string strData, bool valuedata)
+    {
+        a1.SetTrigger(strData);
+
+        yield return new WaitForSeconds(0.5f);
+
+        AnimatorStateInfo animatorStateInfo = a1.GetCurrentAnimatorStateInfo(0);
+        while (animatorStateInfo.normalizedTime < 1.0f)
+        {
+            animatorStateInfo = a1.GetCurrentAnimatorStateInfo(0);
+            yield return null;
+        }
+
+        a2.SetTrigger(strData);
+
+        yield return new WaitForSeconds(0.5f);
+
+        animatorStateInfo = a2.GetCurrentAnimatorStateInfo(0);
+        while (animatorStateInfo.normalizedTime < 1.0f)
+        {
+            animatorStateInfo = a2.GetCurrentAnimatorStateInfo(0);
+            yield return null;
+        }
+        if (valuedata)
+        {
+            touchcount++;
+        }
+    }
+    IEnumerator Delay(Animator a1, Animator a2, string strData, int audioNumber_1, int audioNumber_2, int audioNumber_3, int audioNumber_4)
+    {
+        a1.SetTrigger(strData);
+        audioplayer.clip = audioClips[audioNumber_1];
+        audioplayer.Play();
+        subtitleImage.SetActive(true);
+        subtitleImage.GetComponent<Animator>().SetTrigger("f_1" + strData);
+
+        yield return new WaitForSeconds(0.5f);
+
+        AnimatorStateInfo animatorStateInfo = a1.GetCurrentAnimatorStateInfo(0);
+        while (animatorStateInfo.normalizedTime < 1.0f)
+        {
+            animatorStateInfo = a1.GetCurrentAnimatorStateInfo(0);
+            yield return null;
+        }
+        while (audioplayer.isPlaying)
+        {
+            yield return null;
+        }
+        yield return new WaitForSeconds(1f); //1차 오디오 끝날때 까지 대기
+
+        audioplayer.clip = audioClips[audioNumber_2];
+        audioplayer.Play();
+        subtitleImage.GetComponent<Animator>().SetTrigger("f_2" + strData);
+
+        while (audioplayer.isPlaying)
+        {
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(.5f); //2차 오디오 끝날때 까지 대기
+
+        a2.SetTrigger(strData);
+        audioplayer.clip = audioClips[audioNumber_3];
+        audioplayer.Play();
+        subtitleImage.GetComponent<Animator>().SetTrigger("t_1" + strData);
+
+        yield return new WaitForSeconds(0.5f); //오류방지 딜레이
+
+        animatorStateInfo = a2.GetCurrentAnimatorStateInfo(0);
+        while (animatorStateInfo.normalizedTime < 1.0f)
+        {
+            animatorStateInfo = a2.GetCurrentAnimatorStateInfo(0);
+            yield return null;
+        }
+        while (audioplayer.isPlaying)
+        {
+            yield return null;
+        }
+        yield return new WaitForSeconds(1f); //3차 오디오 끌날때 까지 대기
+        audioplayer.clip = audioClips[audioNumber_4];
+        audioplayer.Play();
+        subtitleImage.GetComponent<Animator>().SetTrigger("t_2" + strData);
+        while (audioplayer.isPlaying)
+        {
+            yield return null;
+        }
+        yield return new WaitForSeconds(2f);
+        subtitleImage.SetActive(false);
+        // 마지막 오디오 끝나면 코루틴 나가기
+    }
+    IEnumerator Delay(Animator a1, Animator a2, string strData, int audioNumber_1, int audioNumber_2)
+    {
+        a1.SetTrigger(strData);
+        audioplayer.clip = audioClips[audioNumber_1];
+        audioplayer.Play();
+        subtitleImage.SetActive(true);
+        subtitleImage.GetComponent<Animator>().SetTrigger("f_" + strData);
+        yield return new WaitForSeconds(0.5f);
+
+        AnimatorStateInfo animatorStateInfo = a1.GetCurrentAnimatorStateInfo(0);
+        while (animatorStateInfo.normalizedTime < 1.0f)
+        {
+            animatorStateInfo = a1.GetCurrentAnimatorStateInfo(0);
+            yield return null;
+        }
+        while (audioplayer.isPlaying)
+        {
+            yield return null;
+        }
+        yield return new WaitForSeconds(.5f);
+
+        a2.SetTrigger(strData);
+        audioplayer.clip = audioClips[audioNumber_2];
+        audioplayer.Play();
+        subtitleImage.GetComponent<Animator>().SetTrigger("t_" + strData);
+
+        yield return new WaitForSeconds(0.5f);
+
+        animatorStateInfo = a2.GetCurrentAnimatorStateInfo(0);
+        while (animatorStateInfo.normalizedTime < 1.0f)
+        {
+            animatorStateInfo = a2.GetCurrentAnimatorStateInfo(0);
+            yield return null;
+        }
+        while (audioplayer.isPlaying)
+        {
+            yield return null;
+        }
+        yield return new WaitForSeconds(2f);
+        subtitleImage.SetActive(false);
+        // 마지막 오디오 끝나면 코루틴 나가기
+    }
+
+}
+
+
+======================================================================================================================================================================
+1. Start 부분에 있던 while문을 Coroutine으로 따로 분류
+2. 원인을 모르겠으나 안드로이드에서 실행가능
