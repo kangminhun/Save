@@ -1,0 +1,22 @@
+
+string xmlFilepath = UnityEngine.Application.streamingAssetsPath + "/Settings/setting.xml";
+
+    private void Lodexml()
+    {
+        XmlDocument doc = new XmlDocument();
+        doc.Load(xmlFilepath);
+
+        XmlNode sensorNodeList = doc.SelectSingleNode("start/Port");
+        XmlNode sensorRangeList = doc.SelectSingleNode("start/Range");
+
+        for (int i = 0; i < sensorNodeList.ChildNodes.Count; i++)
+        {
+            portList.Add(sensorNodeList.ChildNodes[i].InnerText);
+            //xml 파일에서 start/Port 자식으로 있는 string 값들 가져오기
+        }
+        for (int i = 0; i < sensorRangeList.ChildNodes.Count; i++)
+        {
+            rangeList.Add(sensorRangeList.ChildNodes[i].InnerText);
+        }
+
+    }
