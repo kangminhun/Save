@@ -177,13 +177,13 @@ public class CraftSetting : MonoBehaviour
     {
         public string videoUrl;
         public string videoFilePath;
-        public float downloadProgress; // ´Ù¿î·Îµå ÁøÇà·üÀ» ÀúÀåÇÏ´Â º¯¼ö Ãß°¡
-        public bool isDownloaded; // ´Ù¿î·Îµå ¿Ï·á ¿©ºÎ¸¦ ÀúÀåÇÏ´Â º¯¼ö Ãß°¡
+        public float downloadProgress; // ë‹¤ìš´ë¡œë“œ ì§„í–‰ë¥ ì„ ì €ì¥í•˜ëŠ” ë³€ìˆ˜ ì¶”ê°€
+        public bool isDownloaded; // ë‹¤ìš´ë¡œë“œ ì™„ë£Œ ì—¬ë¶€ë¥¼ ì €ì¥í•˜ëŠ” ë³€ìˆ˜ ì¶”ê°€
     }
 
     public List<VideoInfo> videosToDownload = new List<VideoInfo>();
-    public Slider downloadProgressSlider; // ´Ù¿î·Îµå ÁøÇà·üÀ» Ç¥½ÃÇÏ´Â Slider
-    public Text downloadProgressText; // ´Ù¿î·Îµå ÁøÇà·üÀ» ÅØ½ºÆ®·Î Ç¥½ÃÇÏ´Â Text
+    public Slider downloadProgressSlider; // ë‹¤ìš´ë¡œë“œ ì§„í–‰ë¥ ì„ í‘œì‹œí•˜ëŠ” Slider
+    public Text downloadProgressText; // ë‹¤ìš´ë¡œë“œ ì§„í–‰ë¥ ì„ í…ìŠ¤íŠ¸ë¡œ í‘œì‹œí•˜ëŠ” Text
     private Text downloadtotal;
     private string directoryPath;
     private Text downloadindex;
@@ -194,34 +194,34 @@ public class CraftSetting : MonoBehaviour
         player.url = "";
         fade.SetActive(true);
         backPlayer.Stop();
-        // ÀÌ¹Ì ÆÄÀÏÀÌ Á¸ÀçÇÏ´ÂÁö È®ÀÎ
+        // ì´ë¯¸ íŒŒì¼ì´ ì¡´ì¬í•˜ëŠ”ì§€ í™•ì¸
         if (!File.Exists(videosToDownload[num].videoFilePath))
         {
             UnityWebRequest www = UnityWebRequest.Get(videosToDownload[num].videoUrl);
-            Debug.Log("½ÃÀÛ");
-            var downloadOperation = www.SendWebRequest(); // ´Ù¿î·Îµå ½ÃÀÛ
-            while (!downloadOperation.isDone) // ´Ù¿î·Îµå ÁøÇà ÁßÀÎ µ¿¾È ¹İº¹
+            Debug.Log("ì‹œì‘");
+            var downloadOperation = www.SendWebRequest(); // ë‹¤ìš´ë¡œë“œ ì‹œì‘
+            while (!downloadOperation.isDone) // ë‹¤ìš´ë¡œë“œ ì§„í–‰ ì¤‘ì¸ ë™ì•ˆ ë°˜ë³µ
             {
-                videosToDownload[num].downloadProgress = www.downloadProgress; // ´Ù¿î·Îµå ÁøÇà·ü ¾÷µ¥ÀÌÆ®
+                videosToDownload[num].downloadProgress = www.downloadProgress; // ë‹¤ìš´ë¡œë“œ ì§„í–‰ë¥  ì—…ë°ì´íŠ¸
                 float progressRatio = videosToDownload[num].downloadProgress;
                 downloadProgressSlider.value = progressRatio;
                 downloadProgressText.text = (progressRatio * 100f).ToString("F1") + "%";
                 float sliderValue = downloadProgressSlider.value;
                 downloadindex.text = (sliderValue * float.Parse(downloadtotal.text)).ToString("F1");
-                yield return null; // ÇÑ ÇÁ·¹ÀÓ ´ë±â
+                yield return null; // í•œ í”„ë ˆì„ ëŒ€ê¸°
             }
 
             directoryPath = Path.Combine(Application.persistentDataPath, $"Appleberry_English/videos/{craft.week}/Unit{Uichage.unit + 1}");
             if (!Directory.Exists(directoryPath))
             {
                 Directory.CreateDirectory(directoryPath);
-                Debug.Log("»ı¼º");
+                Debug.Log("ìƒì„±");
             }
             yield return DownloadAndPlayVideosAsync(num, www);
         }
         else
         {
-            Debug.Log("ÆÄÀÏÀÌ ÀÌ¹Ì Á¸ÀçÇÕ´Ï´Ù: " + videosToDownload[num].videoFilePath);
+            Debug.Log("íŒŒì¼ì´ ì´ë¯¸ ì¡´ì¬í•©ë‹ˆë‹¤: " + videosToDownload[num].videoFilePath);
             player.url = videosToDownload[num].videoFilePath.TrimEnd();
             StartCoroutine(ClickCorotine());
         }
@@ -237,36 +237,36 @@ public class CraftSetting : MonoBehaviour
             }
             else
             {
-                // ÆÄÀÏ ÀÌ¸§ ÃßÃâ
+                // íŒŒì¼ ì´ë¦„ ì¶”ì¶œ
                 string[] urlSegments = videosToDownload[num].videoUrl.Split('/');
                 string fileName = urlSegments[urlSegments.Length - 1];
 
-                // ÀúÀå °æ·Î ¼³Á¤
+                // ì €ì¥ ê²½ë¡œ ì„¤ì •
                 videosToDownload[num].videoFilePath = Path.Combine(directoryPath, fileName);
 
                 Debug.Log(videosToDownload[num].videoFilePath);
 
-                // ºñµ¿±â ÆÄÀÏ ¾²±â ¸Ş¼­µå È£Ãâ
+                // ë¹„ë™ê¸° íŒŒì¼ ì“°ê¸° ë©”ì„œë“œ í˜¸ì¶œ
                 await WriteFileAsync(videosToDownload[num].videoFilePath.TrimEnd(), www.downloadHandler.data);
             }
         }
         catch (Exception ex)
         {
-            Debug.LogError("ÆÄÀÏ ÀúÀå Áß ¿À·ù ¹ß»ı: " + ex.Message);
+            Debug.LogError("íŒŒì¼ ì €ì¥ ì¤‘ ì˜¤ë¥˜ ë°œìƒ: " + ex.Message);
         }
     }
     async Task WriteFileAsync(string filePath, byte[] data)
     {
         try
         {
-            // ÆÄÀÏ ¾²±â ÀÛ¾÷À» ºñµ¿±âÀûÀ¸·Î ½ÇÇàÇÏ°í ¿Ï·áµÉ ¶§±îÁö ±â´Ù¸³´Ï´Ù.
+            // íŒŒì¼ ì“°ê¸° ì‘ì—…ì„ ë¹„ë™ê¸°ì ìœ¼ë¡œ ì‹¤í–‰í•˜ê³  ì™„ë£Œë  ë•Œê¹Œì§€ ê¸°ë‹¤ë¦½ë‹ˆë‹¤.
             await Task.Run(() => File.WriteAllBytes(filePath, data));
-            Debug.Log("ÆÄÀÏ ÀúÀå ¿Ï·á: " + filePath);
+            Debug.Log("íŒŒì¼ ì €ì¥ ì™„ë£Œ: " + filePath);
 
-            // ÆÄÀÏ ¾²±â ÀÛ¾÷ÀÌ ¿Ï·áµÈ ÈÄ¿¡ ÆÄÀÏÀÌ Á¸ÀçÇÏ´ÂÁö È®ÀÎÇÕ´Ï´Ù.
+            // íŒŒì¼ ì“°ê¸° ì‘ì—…ì´ ì™„ë£Œëœ í›„ì— íŒŒì¼ì´ ì¡´ì¬í•˜ëŠ”ì§€ í™•ì¸í•©ë‹ˆë‹¤.
             if (File.Exists(filePath))
             {
-                Debug.Log("ÆÄÀÏÀÌ ¼º°øÀûÀ¸·Î ÀúÀåµÇ¾ú½À´Ï´Ù.");
+                Debug.Log("íŒŒì¼ì´ ì„±ê³µì ìœ¼ë¡œ ì €ì¥ë˜ì—ˆìŠµë‹ˆë‹¤.");
                 string str = filePath;
                 player.url = str;
 
@@ -275,12 +275,12 @@ public class CraftSetting : MonoBehaviour
             }
             else
             {
-                Debug.LogError("ÆÄÀÏÀÌ ÀúÀåµÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+                Debug.LogError("íŒŒì¼ì´ ì €ì¥ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.");
             }
         }
         catch (Exception ex)
         {
-            Debug.LogError("ÆÄÀÏ ÀúÀå Áß ¿À·ù ¹ß»ı: " + ex.Message);
+            Debug.LogError("íŒŒì¼ ì €ì¥ ì¤‘ ì˜¤ë¥˜ ë°œìƒ: " + ex.Message);
         }
     }
     IEnumerator GetFileSize(string url, Action<long> resut)
