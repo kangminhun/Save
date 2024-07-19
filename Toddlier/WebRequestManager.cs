@@ -74,27 +74,27 @@ public enum UserType
 
 public class WebRequestManager : MonoBehaviour
 {
-    private const string loginUserServerUrl = "http://116.125.141.108:8080/v1/member/login/app/user"; // 회원 로그인 서버의 URL로 변경해야 합니다
-    private const string loginAdminServerUrl = "http://116.125.141.108:8080/v1/member/login/app/admin"; // 관리자 로그인 서버의 URL로 변경해야 합니다
-    private const string joinServerUrl = "http://116.125.141.108:8080/v1/member/join"; // 회원가입 서버의 URL로 변경해야 합니다
-    private const string IDCheckUrl = "http://116.125.141.108:8080/v1/member/new-username";
-    private const string findServerUrl = "http://116.125.141.108:8080/v1/member/find-username"; // 아이디 찾기
-    private const string ChangePasswordServerUrl = "http://116.125.141.108:8080/v1/member/password"; // 비번 변경
-    private const string pointModify = "http://116.125.141.108:8080/v1/goods/point";
-    private const string noticeUrl = "http://116.125.141.108:8080/v1/notice/data";
-    private const string noticeAllUrl = "http://116.125.141.108:8080/v1/mail/all";
-    private const string cardCreateUrl = "http://116.125.141.108:8080/v1/card/data";
-    private const string cardBuyUrl = "http://116.125.141.108:8080/v1/card-purchase/card-id";
-    private const string cardAllUrl= "http://116.125.141.108:8080/v1/card/all";
-    private const string upgradeUrl = "http://116.125.141.108:8080/v1/member/premium";
-    private const string myTypeUrl = "http://116.125.141.108:8080/v1/member/is-premium";
-    private const string allmemberInfoURl = "http://116.125.141.108:8080/v1/member/all";
-    private const string zoomUrl = "http://116.125.141.108:8080/v1/zoom/create-meeting";
-    private const string zoomJoinUrl = "http://116.125.141.108:8080/v1/zoom/join-meeting";
-    private const string myClassUrl = "http://116.125.141.108:8080/v1/open-unit/my";
-    private const string myCardGame = "http://116.125.141.108:8080/v1/card-game/my";
-    private const string cardGaemRound = "http://116.125.141.108:8080/v1/card-game/round";
-    private const string cardGaemStage = "http://116.125.141.108:8080/v1/card-game/stage";
+    private const string loginUserServerUrl = " 서버주소 "; // 회원 로그인 서버의 URL로 변경해야 합니다
+    private const string loginAdminServerUrl = " 서버주소 "; // 관리자 로그인 서버의 URL로 변경해야 합니다
+    private const string joinServerUrl = " 서버주소 "; // 회원가입 서버의 URL로 변경해야 합니다
+    private const string IDCheckUrl = " 서버주소 ";
+    private const string findServerUrl = " 서버주소 "; // 아이디 찾기
+    private const string ChangePasswordServerUrl = " 서버주소 "; // 비번 변경
+    private const string pointModify = " 서버주소 ";
+    private const string noticeUrl = " 서버주소 ";
+    private const string noticeAllUrl = " 서버주소 ";
+    private const string cardCreateUrl = " 서버주소 ";
+    private const string cardBuyUrl = " 서버주소 ";
+    private const string cardAllUrl= " 서버주소 ";
+    private const string upgradeUrl = " 서버주소 ";
+    private const string myTypeUrl = " 서버주소 ";
+    private const string allmemberInfoURl = " 서버주소 ";
+    private const string zoomUrl = " 서버주소 ";
+    private const string zoomJoinUrl = " 서버주소 ";
+    private const string myClassUrl = " 서버주소 ";
+    private const string myCardGame = " 서버주소 ";
+    private const string cardGaemRound = " 서버주소 ";
+    private const string cardGaemStage = " 서버주소 ";
 
     public GameObject resultUI;
     public Sprite[] resultUI_Imgs;
