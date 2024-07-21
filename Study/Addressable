@@ -11,6 +11,7 @@ public class ResourceManager
 {
   Dictionary<string, UnityEngine.Object> _resources = new Dictionary<string, UnityEngine.Object>();
 
+// 내가 쓸 로드가 완료 된 리소스를 불러올 때 코드
   public T Load<T>(string key) where T:Object
   {
    if(_resources.TryGetValue(key, out Object resource))
@@ -18,6 +19,7 @@ public class ResourceManager
 
     return null;
   }
+// 로드 된 GameObject를 생성시킬 때 코드
   public GameObject Instantiate(string key, Transform parent = null, bool pooling = false)
   {
     GameObject prefab =Load<GameObject>($"{key}");
@@ -31,6 +33,7 @@ public class ResourceManager
     go.name = prefab.name;
     return go;
   }
+// 생성 된 오브젝트 삭제 코드
   public void Destroy(GameObject go)
   {
     if(go == null)
